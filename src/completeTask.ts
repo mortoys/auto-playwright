@@ -37,10 +37,15 @@ export const completeTask = async (
         console.log("> message", message);
       }
 
-      if (
-        message.role === "assistant" &&
-        message.function_call?.name.startsWith("result")
-      ) {
+      if (message.role === "assistant") {
+        if (message.tool_calls && message.tool_calls.length > 0) {
+          for (const tool_call of message.tool_calls) {
+            if (tool_call.function.name.startsWith("result")) {
+              lastFunctionResult = JSON.parse(tool_call.function.arguments);
+              break;
+            }
+          }
+        } else if (message.function_call?.name.startsWith("result")) {
         lastFunctionResult = JSON.parse(message.function_call.arguments);
       }
     });
