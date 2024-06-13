@@ -9,6 +9,7 @@ export type StepOptions = {
   model?: string;
   openaiApiKey?: string;
   openaiBaseUrl?: string;
+  openaiProxy?: string;
   openaiDefaultQuery?: {};
   openaiDefaultHeaders?: {};
 };

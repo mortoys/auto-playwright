@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import { type Page, TaskMessage, TaskResult } from "./types";
 import { prompt } from "./prompt";
 import { createActions } from "./createActions";
@@ -14,6 +15,7 @@ export const completeTask = async (
     baseURL: task.options?.openaiBaseUrl,
     defaultQuery: task.options?.openaiDefaultQuery,
     defaultHeaders: task.options?.openaiDefaultHeaders,
+    httpAgent: task.options?.openaiProxy && new HttpsProxyAgent(task.options?.openaiProxy),
   });
 
   let lastFunctionResult: null | { errorMessage: string } | { query: string } =
@@ -46,7 +48,8 @@ export const completeTask = async (
             }
           }
         } else if (message.function_call?.name.startsWith("result")) {
-        lastFunctionResult = JSON.parse(message.function_call.arguments);
+          lastFunctionResult = JSON.parse(message.function_call.arguments);
+        }
       }
     });
 

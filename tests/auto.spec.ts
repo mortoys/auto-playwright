@@ -1,7 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { auto } from "../src/auto";
 
-const options = undefined;
+// const options = undefined;
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const options = {
+  debug: true,
+  model: 'gpt-4o-2024-05-13',
+  openaiApiKey: OPENAI_API_KEY,
+  openaiProxy: 'http://localhost:1087'
+};
 
 test("executes query", async ({ page }) => {
   await page.goto("/");

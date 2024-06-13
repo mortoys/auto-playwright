@@ -62,6 +62,7 @@ async function runTask(
           openaiBaseUrl: options.openaiBaseUrl,
           openaiDefaultQuery: options.openaiDefaultQuery,
           openaiDefaultHeaders: options.openaiDefaultHeaders,
+          openaiProxy: options.openaiProxy
         }
       : undefined,
   });
