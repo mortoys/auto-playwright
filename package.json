@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "@hono/node-server": "^1.2.0",
+    "dotenv": "^16.4.5",
     "hono": "^3.9.2",
     "https-proxy-agent": "^7.0.4",
     "openai": "^4.17.3",
+    "playwright": "^1.44.1",
     "sanitize-html": "^2.11.0",
     "zod": "^3.22.4"
   },
@@ -55,6 +57,7 @@
     "format": "prettier --write ./src",
     "lint": "prettier --check ./src && knip",
     "semantic-release": "semantic-release",
+    "main": "tsx ./main.ts",
     "test": "playwright test"
   },
   "version": "0.0.0-development"

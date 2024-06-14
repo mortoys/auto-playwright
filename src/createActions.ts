@@ -21,7 +21,7 @@ export const createActions = (
   return {
     locateElement: {
       function: async (args: { cssSelector: string }) => {
-        const locator = await page.locator(args.cssSelector);
+        const locator = await page.locator(args.cssSelector).first();
 
         const elementId = randomUUID();
 
@@ -135,7 +135,8 @@ export const createActions = (
     },
     locator_innerText: {
       function: async (args: { elementId: string }) => {
-        return { innerText: await getLocator(args.elementId).innerText() };
+        const innerText = await getLocator(args.elementId).innerText()
+        return { innerText: innerText };
       },
       name: "locator_innerText",
       description: "Returns the element.innerText.",
@@ -492,17 +493,19 @@ export const createActions = (
       },
     },
     page_goto: {
-      function: async (args: { url: string }) => {
+      function: async (args: { value: string }) => {
+        await page.goto(args.value);
+
         return {
-          url: await page.goto(args.url),
+          url: args.value,
         };
       },
       name: "page_goto",
-      description: "Set a value to the input field.",
+      description: "Set a value to the website url input field.",
       parse: (args: string) => {
         return z
           .object({
-            cssLocator: z.string(),
+            // cssLocator: z.string(),
             value: z.string(),
           })
           .parse(JSON.parse(args));
@@ -513,9 +516,9 @@ export const createActions = (
           value: {
             type: "string",
           },
-          cssLocator: {
-            type: "string",
-          },
+          // cssLocator: {
+          //   type: "string",
+          // },
         },
       },
     },

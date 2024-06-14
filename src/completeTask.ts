@@ -42,6 +42,8 @@ export const completeTask = async (
       if (message.role === "assistant") {
         if (message.tool_calls && message.tool_calls.length > 0) {
           for (const tool_call of message.tool_calls) {
+            console.log('tool_call ', tool_call.function.name, tool_call.function.arguments)
+
             if (tool_call.function.name.startsWith("result")) {
               lastFunctionResult = JSON.parse(tool_call.function.arguments);
               break;
@@ -55,17 +57,17 @@ export const completeTask = async (
 
   const finalContent = await runner.finalContent();
 
-  if (debug) {
+  // if (debug) {
     console.log("> finalContent", finalContent);
-  }
+  // }
 
-  if (!lastFunctionResult) {
-    throw new Error("Expected to have result");
-  }
+  // if (!lastFunctionResult) {
+  //   throw new Error("Expected to have result");
+  // }
 
-  if (debug) {
+  // if (debug) {
     console.log("> lastFunctionResult", lastFunctionResult);
-  }
+  // }
 
   return lastFunctionResult;
 };
